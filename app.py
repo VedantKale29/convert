@@ -113,13 +113,22 @@ def _png(data):
     return Image.open(io.BytesIO(data)) if data else None
 
 
-def preview_frame(page):
+def preview_frame(page, viewport=None):
+    """Show the page at the screenshot's width (a phone screenshot is previewed at phone width)."""
     if not page:
         return "<p style='padding:16px;color:#64748b'>No preview (see status).</p>"
+    width = viewport[0] if viewport and viewport[0] < 900 else None
+    height = min(max(viewport[1], 480), 900) if width else 720
+    size = f"width:{width}px;max-width:100%;margin:0 auto;display:block" if width else "width:100%"
+    note = (
+        f"<p style='text-align:center;color:#64748b;font-size:12px'>shown at {width}px, your screenshot's width</p>"
+        if width
+        else ""
+    )
     return (
         f'<iframe title="Generated UI preview" sandbox="allow-scripts allow-forms" '
-        f'style="width:100%;height:720px;border:1px solid #e2e8f0;border-radius:8px;background:#fff" '
-        f'srcdoc="{html.escape(page, quote=True)}"></iframe>'
+        f'style="{size};height:{height}px;border:1px solid #e2e8f0;border-radius:8px;background:#fff" '
+        f'srcdoc="{html.escape(page, quote=True)}"></iframe>{note}'
     )
 
 
@@ -175,7 +184,7 @@ def make_handler(provider_factory, demo=False):
         res = box["res"]
         yield (
             (DEMO_NOTE if demo else "") + status_markdown(res),
-            preview_frame(res["preview_html"]),
+            preview_frame(res["preview_html"], res.get("viewport")),
             json.dumps(res["ir"], indent=2) if res["ir"] else "",
             res["files"].get("App.jsx", ""),
             res["files"].get("styles.css", ""),

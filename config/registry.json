@@ -1,56 +1,382 @@
 {
-  "version": "registry-v1",
+  "version": "registry-v2",
   "_note": "DRAFT vocabulary for team review. Each component: kind (container/leaf), variants, props (type + required), text rule, a11y rule.",
   "components": {
-    "Stack":   {"kind": "container", "variants": ["default"], "text": "none",
-                "props": {"direction": {"type": "enum", "values": ["row", "column"], "required": true},
-                          "gap": {"type": "token", "group": "spacing", "required": false},
-                          "align": {"type": "enum", "values": ["start", "center", "end", "stretch"], "required": false}}},
-    "Grid":    {"kind": "container", "variants": ["default"], "text": "none",
-                "props": {"columns": {"type": "integer", "min": 1, "max": 6, "required": true},
-                          "gap": {"type": "token", "group": "spacing", "required": false}}},
-    "Navbar":  {"kind": "container", "variants": ["default", "dark"], "text": "optional", "props": {}},
-    "Sidebar": {"kind": "container", "variants": ["default", "dark"], "text": "none", "props": {}},
-    "Card":    {"kind": "container", "variants": ["default", "outlined"], "text": "optional", "props": {}},
-    "Form":    {"kind": "container", "variants": ["default"], "text": "optional", "props": {}},
-
-    "Heading": {"kind": "leaf", "variants": ["default"], "text": "required",
-                "props": {"level": {"type": "integer", "min": 1, "max": 4, "required": true}}},
-    "Text":    {"kind": "leaf", "variants": ["default", "muted", "error"], "text": "required", "props": {}},
-    "Link":    {"kind": "leaf", "variants": ["default"], "text": "required", "props": {}},
-    "Button":  {"kind": "leaf", "variants": ["primary", "secondary", "danger", "ghost"], "text": "required",
-                "a11y": "Button needs visible text", "props": {}},
-    "Input":   {"kind": "leaf", "variants": ["default"], "text": "none",
-                "a11y": "Input needs a label",
-                "props": {"label": {"type": "string", "required": true},
-                          "inputType": {"type": "enum", "values": ["text", "email", "password", "number", "tel", "date", "search"], "required": true},
-                          "placeholder": {"type": "string", "required": false},
-                          "required": {"type": "boolean", "required": false}}},
-    "Select":  {"kind": "leaf", "variants": ["default"], "text": "none", "a11y": "Select needs a label",
-                "props": {"label": {"type": "string", "required": true},
-                          "options": {"type": "string_list", "required": true}}},
-    "Checkbox":{"kind": "leaf", "variants": ["default"], "text": "none", "a11y": "Checkbox needs a label",
-                "props": {"label": {"type": "string", "required": true}}},
-    "Textarea":{"kind": "leaf", "variants": ["default"], "text": "none", "a11y": "Textarea needs a label",
-                "props": {"label": {"type": "string", "required": true},
-                          "placeholder": {"type": "string", "required": false}}},
-    "Image":   {"kind": "leaf", "variants": ["default"], "text": "none", "a11y": "Image needs alt text",
-                "props": {"alt": {"type": "string", "required": true}}},
-    "Metric":  {"kind": "leaf", "variants": ["default"], "text": "none",
-                "props": {"label": {"type": "string", "required": true},
-                          "value": {"type": "string", "required": true}}},
-    "Table":   {"kind": "leaf", "variants": ["default"], "text": "optional",
-                "props": {"columns": {"type": "string_list", "required": true},
-                          "rows": {"type": "string_matrix", "required": false}}},
-    "List":    {"kind": "leaf", "variants": ["default", "nav"], "text": "none",
-                "props": {"items": {"type": "string_list", "required": true}}},
-    "Tabs":    {"kind": "leaf", "variants": ["default"], "text": "none",
-                "props": {"items": {"type": "string_list", "required": true}}},
-    "Badge":   {"kind": "leaf", "variants": ["default", "success", "warning", "error"], "text": "required", "props": {}},
-    "Divider": {"kind": "leaf", "variants": ["default"], "text": "none", "props": {}},
-    "Chart":   {"kind": "leaf", "variants": ["bar", "line", "pie"], "text": "optional",
-                "props": {"label": {"type": "string", "required": false}}},
-    "Placeholder": {"kind": "leaf", "variants": ["default"], "text": "required",
-                "props": {}, "_note": "Fallback for anything the registry cannot express. Counts against coverage."}
+    "Stack": {
+      "kind": "container",
+      "variants": [
+        "default"
+      ],
+      "text": "none",
+      "props": {
+        "direction": {
+          "type": "enum",
+          "values": [
+            "row",
+            "column"
+          ],
+          "required": true
+        },
+        "gap": {
+          "type": "token",
+          "group": "spacing",
+          "required": false
+        },
+        "align": {
+          "type": "enum",
+          "values": [
+            "start",
+            "center",
+            "end",
+            "stretch"
+          ],
+          "required": false
+        },
+        "justify": {
+          "type": "enum",
+          "values": [
+            "start",
+            "center",
+            "end",
+            "between"
+          ],
+          "required": false
+        },
+        "wrap": {
+          "type": "boolean",
+          "required": false
+        }
+      }
+    },
+    "Grid": {
+      "kind": "container",
+      "variants": [
+        "default"
+      ],
+      "text": "none",
+      "props": {
+        "columns": {
+          "type": "integer",
+          "min": 1,
+          "max": 6,
+          "required": true
+        },
+        "gap": {
+          "type": "token",
+          "group": "spacing",
+          "required": false
+        }
+      }
+    },
+    "Navbar": {
+      "kind": "container",
+      "variants": [
+        "default",
+        "dark"
+      ],
+      "text": "optional",
+      "props": {}
+    },
+    "Sidebar": {
+      "kind": "container",
+      "variants": [
+        "default",
+        "dark"
+      ],
+      "text": "none",
+      "props": {}
+    },
+    "Card": {
+      "kind": "container",
+      "variants": [
+        "default",
+        "outlined"
+      ],
+      "text": "optional",
+      "props": {}
+    },
+    "Form": {
+      "kind": "container",
+      "variants": [
+        "default"
+      ],
+      "text": "optional",
+      "props": {}
+    },
+    "Heading": {
+      "kind": "leaf",
+      "variants": [
+        "default"
+      ],
+      "text": "required",
+      "props": {
+        "level": {
+          "type": "integer",
+          "min": 1,
+          "max": 4,
+          "required": true
+        }
+      }
+    },
+    "Text": {
+      "kind": "leaf",
+      "variants": [
+        "default",
+        "muted",
+        "error"
+      ],
+      "text": "required",
+      "props": {}
+    },
+    "Link": {
+      "kind": "leaf",
+      "variants": [
+        "default"
+      ],
+      "text": "required",
+      "props": {}
+    },
+    "Button": {
+      "kind": "leaf",
+      "variants": [
+        "primary",
+        "secondary",
+        "danger",
+        "ghost"
+      ],
+      "text": "required",
+      "a11y": "Button needs visible text",
+      "props": {}
+    },
+    "Input": {
+      "kind": "leaf",
+      "variants": [
+        "default"
+      ],
+      "text": "none",
+      "a11y": "Input needs a label",
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true
+        },
+        "inputType": {
+          "type": "enum",
+          "values": [
+            "text",
+            "email",
+            "password",
+            "number",
+            "tel",
+            "date",
+            "search"
+          ],
+          "required": true
+        },
+        "placeholder": {
+          "type": "string",
+          "required": false
+        },
+        "required": {
+          "type": "boolean",
+          "required": false
+        },
+        "labelHidden": {
+          "type": "boolean",
+          "required": false
+        }
+      }
+    },
+    "Select": {
+      "kind": "leaf",
+      "variants": [
+        "default"
+      ],
+      "text": "none",
+      "a11y": "Select needs a label",
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true
+        },
+        "options": {
+          "type": "string_list",
+          "required": true
+        },
+        "labelHidden": {
+          "type": "boolean",
+          "required": false
+        }
+      }
+    },
+    "Checkbox": {
+      "kind": "leaf",
+      "variants": [
+        "default"
+      ],
+      "text": "none",
+      "a11y": "Checkbox needs a label",
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "Textarea": {
+      "kind": "leaf",
+      "variants": [
+        "default"
+      ],
+      "text": "none",
+      "a11y": "Textarea needs a label",
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true
+        },
+        "placeholder": {
+          "type": "string",
+          "required": false
+        },
+        "labelHidden": {
+          "type": "boolean",
+          "required": false
+        }
+      }
+    },
+    "Image": {
+      "kind": "leaf",
+      "variants": [
+        "default"
+      ],
+      "text": "none",
+      "a11y": "Image needs alt text",
+      "props": {
+        "alt": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "Metric": {
+      "kind": "leaf",
+      "variants": [
+        "default"
+      ],
+      "text": "none",
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true
+        },
+        "value": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "Table": {
+      "kind": "leaf",
+      "variants": [
+        "default"
+      ],
+      "text": "optional",
+      "props": {
+        "columns": {
+          "type": "string_list",
+          "required": true
+        },
+        "rows": {
+          "type": "string_matrix",
+          "required": false
+        }
+      }
+    },
+    "List": {
+      "kind": "leaf",
+      "variants": [
+        "default",
+        "nav",
+        "horizontal",
+        "tabbar"
+      ],
+      "text": "none",
+      "props": {
+        "items": {
+          "type": "string_list",
+          "required": true
+        },
+        "active": {
+          "type": "integer",
+          "min": 0,
+          "max": 50,
+          "required": false
+        }
+      }
+    },
+    "Tabs": {
+      "kind": "leaf",
+      "variants": [
+        "default",
+        "pills"
+      ],
+      "text": "none",
+      "props": {
+        "items": {
+          "type": "string_list",
+          "required": true
+        },
+        "active": {
+          "type": "integer",
+          "min": 0,
+          "max": 50,
+          "required": false
+        }
+      }
+    },
+    "Badge": {
+      "kind": "leaf",
+      "variants": [
+        "default",
+        "success",
+        "warning",
+        "error"
+      ],
+      "text": "required",
+      "props": {}
+    },
+    "Divider": {
+      "kind": "leaf",
+      "variants": [
+        "default"
+      ],
+      "text": "none",
+      "props": {}
+    },
+    "Chart": {
+      "kind": "leaf",
+      "variants": [
+        "bar",
+        "line",
+        "pie"
+      ],
+      "text": "optional",
+      "props": {
+        "label": {
+          "type": "string",
+          "required": false
+        }
+      }
+    },
+    "Placeholder": {
+      "kind": "leaf",
+      "variants": [
+        "default"
+      ],
+      "text": "required",
+      "props": {},
+      "_note": "Fallback for anything the registry cannot express. Counts against coverage."
+    }
   }
 }

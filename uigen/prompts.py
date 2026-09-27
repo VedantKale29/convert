@@ -4,7 +4,7 @@ import json
 
 from .config import registry, tokens
 
-PROMPT_VERSION = "ui-generator-v2"
+PROMPT_VERSION = "ui-generator-v3"
 
 
 def _component_catalog():

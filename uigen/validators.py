@@ -112,6 +112,12 @@ def check_nesting(doc):
 
     walk(doc.root, "root", False)
     for path, node in iter_nodes(doc.root):
+        active, items = node.prop("active"), node.prop("items")
+        if isinstance(active, float) and isinstance(items, list) and active >= len(items):
+            errors.append(
+                f"{path} ({node.type}): active is {int(active)} but there are only {len(items)} items "
+                f"(0-based index, 0..{len(items) - 1})"
+            )
         for prop in ("items", "options"):
             values = node.prop(prop)
             if isinstance(values, list) and len(values) != len(set(values)):

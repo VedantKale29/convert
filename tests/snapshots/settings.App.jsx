@@ -2,10 +2,10 @@
 import React, { useState } from 'react';
 import './styles.css';
 
-function TabBar({ items }) {
-  const [active, setActive] = useState(0);
+function TabBar({ items, initial, variant }) {
+  const [active, setActive] = useState(initial);
   return (
-    <div className="ui-tabs" role="tablist">
+    <div className={"ui-tabs ui-tabs--" + variant} role="tablist">
       {items.map((item, i) => (
         <button key={i} type="button" role="tab" aria-selected={i === active}
           className={i === active ? "ui-tab ui-tab--active" : "ui-tab"} onClick={() => setActive(i)}>
@@ -24,7 +24,7 @@ export default function App() {
     <main className="ui-app" aria-label={"Account settings"}>
       <div className={"ui-stack ui-stack--column ui-gap--md"}>
         <h1 className="ui-heading">{"Account settings"}</h1>
-        <TabBar items={["Profile", "Notifications", "Security"]} />
+        <TabBar items={["Profile", "Notifications", "Security"]} initial={0} variant={"default"} />
         <section className={"ui-card ui-card--default"}>
           <form className="ui-form" onSubmit={handleSubmit}>
             <div className={"ui-grid ui-grid--cols-2"}>

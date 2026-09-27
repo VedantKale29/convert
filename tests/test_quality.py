@@ -115,7 +115,7 @@ def test_axe_finds_real_accessibility_errors(tmp_path):
 
 @needs_browser
 def test_generated_screens_have_no_axe_violations(tmp_path):
-    for case in ("login", "dashboard", "settings"):
+    for case in ("login", "dashboard", "settings", "mobile_deliveries"):
         q = _generate(case, case, tmp_path)["quality"]
         assert q["accessibility"] == [], (case, q["accessibility"])
 
@@ -202,3 +202,48 @@ def test_quality_works_inside_a_running_event_loop(tmp_path):
 
     q = asyncio.run(in_loop())
     assert q is not None and q["fidelity"] > 0.7
+
+
+# ---------- regression: first real run (phone screenshot) ----------
+def test_system_ui_is_ignored_only_at_the_edges():
+    assert quality.is_system_ui("9:41", 0.02) and quality.is_system_ui("5G86%", 0.02)
+    assert quality.is_system_ui("https://portal.example.com/login", 0.03) and quality.is_system_ui("14:12", 0.98)
+    assert not quality.is_system_ui("9:41", 0.5)  # a time in the page content still counts
+    assert not quality.is_system_ui("Deliveries", 0.02)  # real content at the top still counts
+
+
+def test_ocr_lookalike_characters():
+    n = quality.normalize
+    assert quality._same(n("AlI"), n("All")) and quality._same(n("PO-1O42"), n("PO-1042"))
+    assert not quality._same(n("Late"), n("Lake"))
+
+
+@needs_browser
+def test_mobile_layout_matches_the_screenshot(tmp_path):
+    """Badges on the right, pill filters, bottom tab bar: all expressible since registry-v2."""
+    q = _generate("mobile_deliveries", "mobile_deliveries", tmp_path)["quality"]
+    assert q["misplaced"] == [] and q["missing_text"] == [] and q["extra_text"] == []
+    assert q["fidelity"] > 0.84 and q["a11y_violations"] == 0
+    assert q["viewport"] == [390, 844]
+
+
+@needs_browser
+def test_card_content_has_vertical_rhythm():
+    """Guards a CSS specificity bug: .ui-text {margin:0} used to cancel the spacing inside cards."""
+    import tempfile
+
+    from playwright.sync_api import sync_playwright
+
+    from uigen.build import build, preview_html
+    from uigen.compile_react import compile_react
+
+    r = build(compile_react(load_case("mobile_deliveries")), tempfile.mkdtemp())
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        page = browser.new_page(viewport={"width": 390, "height": 844})
+        page.set_content(preview_html(r["js"], r["css"]))
+        margins = page.locator(".ui-card").first.evaluate(
+            "c => [...c.children].map(e => getComputedStyle(e).marginTop)"
+        )
+        browser.close()
+    assert margins == ["0px", "8px", "8px"]

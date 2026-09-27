@@ -14,12 +14,14 @@ export default function App() {
         </nav>
         <div className={"ui-stack ui-stack--row"}>
           <aside className={"ui-sidebar ui-sidebar--default"}>
-            <ul className={"ui-list ui-list--nav"}>
-              <li>{"Overview"}</li>
-              <li>{"Orders"}</li>
-              <li>{"Suppliers"}</li>
-              <li>{"Reports"}</li>
-            </ul>
+            <nav className={"ui-listnav ui-listnav--nav"} aria-label={"nav"}>
+              <ul className={"ui-list ui-list--nav"}>
+                <li>{"Overview"}</li>
+                <li>{"Orders"}</li>
+                <li>{"Suppliers"}</li>
+                <li>{"Reports"}</li>
+              </ul>
+            </nav>
           </aside>
           <div className={"ui-stack ui-stack--column ui-gap--lg"}>
             <h1 className="ui-heading">{"Overview"}</h1>

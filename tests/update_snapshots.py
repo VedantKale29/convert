@@ -10,6 +10,6 @@ from conftest import load_case  # noqa: E402
 
 from uigen.compile_react import compile_react  # noqa: E402
 
-for case in ["login", "dashboard", "settings"]:
+for case in ["login", "dashboard", "settings", "mobile_deliveries"]:
     (ROOT / "tests" / "snapshots" / f"{case}.App.jsx").write_text(compile_react(load_case(case))["App.jsx"])
     print("updated", case)

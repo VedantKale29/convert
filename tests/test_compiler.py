@@ -10,7 +10,7 @@ from uigen.config import registry
 from uigen.ir import UIDocument
 
 SNAPSHOTS = Path(__file__).resolve().parent / "snapshots"
-CASES = ["login", "dashboard", "settings"]
+CASES = ["login", "dashboard", "settings", "mobile_deliveries"]
 needs_node = pytest.mark.skipif(not toolchain_ready(), reason="run 'npm install' in build_workspace/")
 
 

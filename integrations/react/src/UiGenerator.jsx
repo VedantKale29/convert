@@ -60,8 +60,11 @@ export default function UiGenerator({ apiBase = "/api/uigen" }) {
             ))}
           </div>
           {tab === "preview" && (
+            // Preview at the screenshot's width: a phone screenshot is shown at phone width, not stretched.
             <iframe title="Generated UI" src={gen.previewUrl} sandbox="allow-scripts allow-forms"
-                    style={{ width: "100%", height: 600, border: "1px solid #ddd" }} />
+                    style={{ width: r.viewport && r.viewport[0] < 900 ? r.viewport[0] : "100%", maxWidth: "100%",
+                             height: r.viewport ? Math.min(Math.max(r.viewport[1], 480), 900) : 600,
+                             display: "block", margin: "0 auto", border: "1px solid #ddd" }} />
           )}
           {tab === "code" && <pre className="uigen-code">{r.files["App.jsx"]}</pre>}
           {tab === "ir" && <pre className="uigen-code">{JSON.stringify(r.ir, null, 2)}</pre>}

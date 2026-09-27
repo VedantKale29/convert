@@ -43,11 +43,20 @@ DOM_TEXT_JS = """() => {
     const range = document.createRange(); range.selectNodeContents(node);
     add(node.textContent, range.getBoundingClientRect());
   }
+  // Text inside a form control starts at its left padding: measure where the text really is, not the box.
+  const canvas = document.createElement('canvas').getContext('2d');
+  const textBox = (el, text) => {
+    const r = el.getBoundingClientRect(), cs = getComputedStyle(el);
+    canvas.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+    const left = r.left + parseFloat(cs.paddingLeft || '0') + parseFloat(cs.borderLeftWidth || '0');
+    const w = Math.min(canvas.measureText(text).width, r.width);
+    return {left, top: r.top, width: w, height: r.height};
+  };
   document.querySelectorAll('input, textarea').forEach(el => {
     if (['checkbox', 'radio', 'button', 'submit', 'hidden'].includes(el.type)) return;   // value is not visible text
-    add(el.value || el.placeholder, el.getBoundingClientRect()); });
+    const text = el.value || el.placeholder; if (text) add(text, textBox(el, text)); });
   document.querySelectorAll('select').forEach(el => {
-    const opt = el.options[el.selectedIndex]; if (opt) add(opt.text, el.getBoundingClientRect()); });
+    const opt = el.options[el.selectedIndex]; if (opt) add(opt.text, textBox(el, opt.text)); });
   return out;
 }"""
 
@@ -69,9 +78,26 @@ def normalize(text):
     return re.sub(r"[^0-9a-z]", "", text.lower())
 
 
+_OCR_CONFUSIONS = str.maketrans({"i": "l", "1": "l", "0": "o"})  # I/l/1 and O/0 look alike to OCR
+
+# System UI that the model is told to ignore, so it must not count as "missing": phone status bars,
+# OS taskbars and browser address bars. Only removed near the top or bottom edge of the image.
+_SYSTEM_TEXT = re.compile(
+    r"^(\d{1,2}[:.]\d{2}(\s?[ap]m)?|\d{1,3}\s?%|[345]g|lte|wi-?fi|5g\s?\d{1,3}%|\d{1,2}[-/]\d{1,2}[-/]\d{2,4}"
+    r"|https?://\S+|www\.\S+|\S+\.(com|org|net|io|in)(/\S*)?)$",
+    re.IGNORECASE,
+)
+EDGE = 0.05  # top/bottom 5% of the image
+
+
+def is_system_ui(text, cy):
+    return (cy < EDGE or cy > 1 - EDGE) and bool(_SYSTEM_TEXT.match(text.strip()))
+
+
 def _same(a, b):
     if not a or not b:
         return False
+    a, b = a.translate(_OCR_CONFUSIONS), b.translate(_OCR_CONFUSIONS)
     if a == b:
         return True
     shorter, longer = sorted((a, b), key=len)
@@ -98,7 +124,10 @@ def ocr_blocks(png_bytes):
         if float(conf) < MIN_OCR_CONFIDENCE or len(normalize(text)) < 2:
             continue
         xs, ys = [p[0] for p in box], [p[1] for p in box]
-        blocks.append({"text": text, "cx": (min(xs) + max(xs)) / 2 / w, "cy": (min(ys) + max(ys)) / 2 / h})
+        cx, cy = (min(xs) + max(xs)) / 2 / w, (min(ys) + max(ys)) / 2 / h
+        if is_system_ui(text, cy):
+            continue
+        blocks.append({"text": text, "cx": cx, "cy": cy})
     return blocks
 
 

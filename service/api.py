@@ -70,6 +70,7 @@ def _public(res):
         "quality": q or None,
         "fidelity_repair": res["fidelity_repair"],
         "config": res["config"],
+        "viewport": res["viewport"],
         "usage": {
             "model": tr["model"],
             "input_tokens": tr["input_tokens"],

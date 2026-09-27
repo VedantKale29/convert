@@ -1,0 +1,387 @@
+{
+  "title": "Deliveries",
+  "unsupported": [],
+  "root": {
+    "type": "Stack",
+    "variant": null,
+    "text": null,
+    "props": [
+      {
+        "name": "direction",
+        "value": "column"
+      },
+      {
+        "name": "gap",
+        "value": "md"
+      }
+    ],
+    "children": [
+      {
+        "type": "Stack",
+        "variant": null,
+        "text": null,
+        "props": [
+          {
+            "name": "direction",
+            "value": "column"
+          },
+          {
+            "name": "gap",
+            "value": "xs"
+          }
+        ],
+        "children": [
+          {
+            "type": "Heading",
+            "variant": null,
+            "text": "Deliveries",
+            "props": [
+              {
+                "name": "level",
+                "value": 1.0
+              }
+            ],
+            "children": []
+          },
+          {
+            "type": "Text",
+            "variant": "muted",
+            "text": "Tuesday, 29 Sep",
+            "props": [],
+            "children": []
+          }
+        ]
+      },
+      {
+        "type": "Input",
+        "variant": null,
+        "text": null,
+        "props": [
+          {
+            "name": "label",
+            "value": "Search deliveries"
+          },
+          {
+            "name": "inputType",
+            "value": "search"
+          },
+          {
+            "name": "placeholder",
+            "value": "Search by PO or supplier"
+          },
+          {
+            "name": "labelHidden",
+            "value": true
+          }
+        ],
+        "children": []
+      },
+      {
+        "type": "Tabs",
+        "variant": "pills",
+        "text": null,
+        "props": [
+          {
+            "name": "items",
+            "value": [
+              "All",
+              "Today",
+              "Late"
+            ]
+          },
+          {
+            "name": "active",
+            "value": 0.0
+          }
+        ],
+        "children": []
+      },
+      {
+        "type": "Stack",
+        "variant": null,
+        "text": null,
+        "props": [
+          {
+            "name": "direction",
+            "value": "column"
+          },
+          {
+            "name": "gap",
+            "value": "sm"
+          }
+        ],
+        "children": [
+          {
+            "type": "Card",
+            "variant": null,
+            "text": null,
+            "props": [],
+            "children": [
+              {
+                "type": "Stack",
+                "variant": null,
+                "text": null,
+                "props": [
+                  {
+                    "name": "direction",
+                    "value": "row"
+                  },
+                  {
+                    "name": "justify",
+                    "value": "between"
+                  },
+                  {
+                    "name": "align",
+                    "value": "center"
+                  }
+                ],
+                "children": [
+                  {
+                    "type": "Heading",
+                    "variant": null,
+                    "text": "PO-1042",
+                    "props": [
+                      {
+                        "name": "level",
+                        "value": 3.0
+                      }
+                    ],
+                    "children": []
+                  },
+                  {
+                    "type": "Badge",
+                    "variant": "success",
+                    "text": "On time",
+                    "props": [],
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "type": "Text",
+                "variant": null,
+                "text": "Acme Metals",
+                "props": [],
+                "children": []
+              },
+              {
+                "type": "Text",
+                "variant": "muted",
+                "text": "ETA 10:30",
+                "props": [],
+                "children": []
+              }
+            ]
+          },
+          {
+            "type": "Card",
+            "variant": null,
+            "text": null,
+            "props": [],
+            "children": [
+              {
+                "type": "Stack",
+                "variant": null,
+                "text": null,
+                "props": [
+                  {
+                    "name": "direction",
+                    "value": "row"
+                  },
+                  {
+                    "name": "justify",
+                    "value": "between"
+                  },
+                  {
+                    "name": "align",
+                    "value": "center"
+                  }
+                ],
+                "children": [
+                  {
+                    "type": "Heading",
+                    "variant": null,
+                    "text": "PO-1043",
+                    "props": [
+                      {
+                        "name": "level",
+                        "value": 3.0
+                      }
+                    ],
+                    "children": []
+                  },
+                  {
+                    "type": "Badge",
+                    "variant": "error",
+                    "text": "Late",
+                    "props": [],
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "type": "Text",
+                "variant": null,
+                "text": "Nimbus Parts",
+                "props": [],
+                "children": []
+              },
+              {
+                "type": "Text",
+                "variant": "muted",
+                "text": "ETA 13:00",
+                "props": [],
+                "children": []
+              }
+            ]
+          },
+          {
+            "type": "Card",
+            "variant": null,
+            "text": null,
+            "props": [],
+            "children": [
+              {
+                "type": "Stack",
+                "variant": null,
+                "text": null,
+                "props": [
+                  {
+                    "name": "direction",
+                    "value": "row"
+                  },
+                  {
+                    "name": "justify",
+                    "value": "between"
+                  },
+                  {
+                    "name": "align",
+                    "value": "center"
+                  }
+                ],
+                "children": [
+                  {
+                    "type": "Heading",
+                    "variant": null,
+                    "text": "PO-1047",
+                    "props": [
+                      {
+                        "name": "level",
+                        "value": 3.0
+                      }
+                    ],
+                    "children": []
+                  },
+                  {
+                    "type": "Badge",
+                    "variant": "success",
+                    "text": "On time",
+                    "props": [],
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "type": "Text",
+                "variant": null,
+                "text": "Orbit Supply",
+                "props": [],
+                "children": []
+              },
+              {
+                "type": "Text",
+                "variant": "muted",
+                "text": "ETA 15:45",
+                "props": [],
+                "children": []
+              }
+            ]
+          },
+          {
+            "type": "Card",
+            "variant": null,
+            "text": null,
+            "props": [],
+            "children": [
+              {
+                "type": "Stack",
+                "variant": null,
+                "text": null,
+                "props": [
+                  {
+                    "name": "direction",
+                    "value": "row"
+                  },
+                  {
+                    "name": "justify",
+                    "value": "between"
+                  },
+                  {
+                    "name": "align",
+                    "value": "center"
+                  }
+                ],
+                "children": [
+                  {
+                    "type": "Heading",
+                    "variant": null,
+                    "text": "PO-1051",
+                    "props": [
+                      {
+                        "name": "level",
+                        "value": 3.0
+                      }
+                    ],
+                    "children": []
+                  },
+                  {
+                    "type": "Badge",
+                    "variant": "warning",
+                    "text": "At risk",
+                    "props": [],
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "type": "Text",
+                "variant": null,
+                "text": "Delta Composites",
+                "props": [],
+                "children": []
+              },
+              {
+                "type": "Text",
+                "variant": "muted",
+                "text": "ETA 17:20",
+                "props": [],
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "List",
+        "variant": "tabbar",
+        "text": null,
+        "props": [
+          {
+            "name": "items",
+            "value": [
+              "Home",
+              "Deliveries",
+              "Scan",
+              "Profile"
+            ]
+          },
+          {
+            "name": "active",
+            "value": 1.0
+          }
+        ],
+        "children": []
+      }
+    ]
+  }
+}

@@ -150,6 +150,7 @@ def generate(
         "quality": None,
         "fidelity_repair": None,
         "config": config.as_dict(),
+        "viewport": None,  # [width, height] of the image as sent: previews should render at this size
     }
     run_dir = Path(runs_dir) / trace.generation_id
 
@@ -172,6 +173,7 @@ def generate(
             png, info = governance.sanitize_image(image_bytes, config.max_side_px)
             requirement = governance.check_requirement(requirement)
             s.update(info)
+            result["viewport"] = info["sent_size"]
             trace.data["input"] = {"image_sha256": info["original_sha256"], "requirement_chars": len(requirement)}
         except governance.GovernanceError as exc:
             result["errors"] = [str(exc)]

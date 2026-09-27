@@ -1,18 +1,57 @@
 {
-  "version": "ds-v1",
+  "version": "ds-v2",
   "_note": "PLACEHOLDER values. The UI teammate owns this file. Every value here is enforced by the compiler; the LLM never sets CSS.",
-  "colors": {"primary": "#2563EB", "secondary": "#64748B", "danger": "#DC2626", "success": "#16A34A",
-             "warning": "#D97706", "background": "#F8FAFC", "surface": "#FFFFFF", "text": "#0F172A",
-             "muted": "#64748B", "border": "#E2E8F0", "navDark": "#0F172A"},
-  "spacing": {"xs": "4px", "sm": "8px", "md": "16px", "lg": "24px", "xl": "32px"},
-  "radius": {"sm": "4px", "md": "8px", "lg": "12px"},
-  "typography": {"fontFamily": "Inter, 'Segoe UI', system-ui, sans-serif", "baseSize": "15px"},
+  "colors": {
+    "primary": "#2563EB",
+    "secondary": "#64748B",
+    "danger": "#DC2626",
+    "success": "#15803D",
+    "warning": "#B45309",
+    "background": "#F8FAFC",
+    "surface": "#FFFFFF",
+    "text": "#0F172A",
+    "muted": "#64748B",
+    "border": "#E2E8F0",
+    "navDark": "#0F172A"
+  },
+  "spacing": {
+    "xs": "4px",
+    "sm": "8px",
+    "md": "16px",
+    "lg": "24px",
+    "xl": "32px"
+  },
+  "radius": {
+    "sm": "4px",
+    "md": "8px",
+    "lg": "12px"
+  },
+  "typography": {
+    "fontFamily": "Inter, 'Segoe UI', system-ui, sans-serif",
+    "baseSize": "15px"
+  },
   "components": {
-    "button": {"height": "40px", "radius": "8px", "paddingX": "16px"},
-    "input": {"height": "40px", "radius": "8px"},
-    "card": {"radius": "12px", "padding": "24px"},
-    "image": {"aspectRatio": "16 / 9"},
-    "sidebar": {"width": "240px"},
-    "navbar": {"height": "56px"}
+    "button": {
+      "height": "40px",
+      "radius": "8px",
+      "paddingX": "16px"
+    },
+    "input": {
+      "height": "40px",
+      "radius": "8px"
+    },
+    "card": {
+      "radius": "12px",
+      "padding": "24px"
+    },
+    "image": {
+      "aspectRatio": "16 / 9"
+    },
+    "sidebar": {
+      "width": "240px"
+    },
+    "navbar": {
+      "height": "56px"
+    }
   }
 }

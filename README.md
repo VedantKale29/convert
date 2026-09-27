@@ -1,6 +1,6 @@
 # Wireframe → UI IR → React  (Phases 0, 1, 2)
 
-See **ARCHITECTURE.md** (tiers, scaling path, contracts) and **INTEGRATION.md** (React + Node).
+See **ARCHITECTURE.md** (tiers, scaling path, contracts), **INTEGRATION.md** (React + Node) and **CHANGELOG.md**.
 
 A screenshot/wireframe (plus an optional requirement) becomes a validated **UI IR**, which a
 **deterministic compiler** turns into React. The LLM decides *what* is on screen; code decides
@@ -25,7 +25,7 @@ Needs [uv](https://docs.astral.sh/uv/) and Node.js 18+ (`build_workspace/.nvmrc`
 ```powershell
 .\tasks.ps1 setup      # uv sync (creates .venv, installs from uv.lock) + npm ci + creates .env
 # edit .env: add OPENAI_API_KEY; set ALLOW_EXTERNAL_LLM=true only for mock screens / approved data
-.\tasks.ps1 check      # lint + 41 tests
+.\tasks.ps1 check      # lint + 151 tests
 ```
 If PowerShell blocks the script: `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
 

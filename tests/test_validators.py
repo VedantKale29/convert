@@ -79,3 +79,12 @@ def test_nested_form_is_rejected_and_duplicates_warned():
         "(invalid HTML); use a Stack"
     ]
     assert "root.children[1] (Tabs): duplicate items ['A']" in warnings
+
+
+def test_active_index_must_point_at_an_item():
+    d = doc(
+        node("List", variant="tabbar", props={"items": ["Home", "Scan"], "active": 2}),
+        node("Tabs", variant="pills", props={"items": ["All", "Late"], "active": 1}),
+    )
+    errors, _ = validate(d)
+    assert errors == ["root.children[0] (List): active is 2 but there are only 2 items (0-based index, 0..1)"]

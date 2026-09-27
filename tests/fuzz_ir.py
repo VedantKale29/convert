@@ -62,6 +62,11 @@ def random_node(rng, depth=0, name=None, inside_form=False):
         for p, s in spec["props"].items()
         if s.get("required") or rng.random() < 0.5
     ]
+    items = next((p["value"] for p in props if p["name"] == "items"), None)
+    for p in props:
+        if p["name"] == "active":
+            p["value"] = float(rng.randrange(len(items))) if items else None
+    props = [p for p in props if p["value"] is not None]
     text = _text(rng) if spec["text"] == "required" or (spec["text"] == "optional" and rng.random() < 0.5) else None
     children = []
     if spec["kind"] == "container":

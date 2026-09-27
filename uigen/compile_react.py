@@ -50,11 +50,12 @@ def _children(em, node, depth, in_form):
         _node(em, child, depth, in_form)
 
 
-def _field(em, depth, label, required, control):
+def _field(em, depth, label, required, control, hidden=False):
     fid = em.next_id()
     star = " *" if required else ""
     em.emit(depth, '<div className="ui-field">')
-    em.emit(depth + 1, f"<label htmlFor={A(fid)}>{{{js(label + star)}}}</label>")
+    label_cls = ' className="ui-sr-only"' if hidden else ""
+    em.emit(depth + 1, f"<label htmlFor={A(fid)}{label_cls}>{{{js(label + star)}}}</label>")
     em.emit(depth + 1, control(fid))
     em.emit(depth, "</div>")
 
@@ -69,6 +70,8 @@ def _node(em, node, depth, in_form=False):
             f"ui-stack--{node.prop('direction')}",
             node.prop("gap") and f"ui-gap--{node.prop('gap')}",
             node.prop("align") and f"ui-align--{node.prop('align')}",
+            node.prop("justify") and f"ui-justify--{node.prop('justify')}",
+            node.prop("wrap") and "ui-stack--wrap",
         )
         em.emit(depth, f"<div className={cls}>")
         _children(em, node, depth + 1, in_form)
@@ -121,6 +124,7 @@ def _node(em, node, depth, in_form=False):
             node.prop("label"),
             req,
             lambda fid: f'<input id={A(fid)} name={A(fid)} className="ui-input" {attrs} />',
+            bool(node.prop("labelHidden", False)),
         )
     elif t == "Textarea":
         ph = f" placeholder={A(node.prop('placeholder'))}" if node.prop("placeholder") else ""
@@ -130,6 +134,7 @@ def _node(em, node, depth, in_form=False):
             node.prop("label"),
             False,
             lambda fid: f'<textarea id={A(fid)} name={A(fid)} className="ui-input ui-textarea"{ph} />',
+            bool(node.prop("labelHidden", False)),
         )
     elif t == "Select":
         opts = "".join(f"<option key={A(i)}>{{{js(o)}}}</option>" for i, o in enumerate(node.prop("options")))
@@ -139,6 +144,7 @@ def _node(em, node, depth, in_form=False):
             node.prop("label"),
             False,
             lambda fid: f'<select id={A(fid)} name={A(fid)} className="ui-input">{opts}</select>',
+            bool(node.prop("labelHidden", False)),
         )
     elif t == "Checkbox":
         fid = em.next_id()
@@ -170,13 +176,27 @@ def _node(em, node, depth, in_form=False):
         em.emit(depth + 1, "</table>")
         em.emit(depth, "</div>")
     elif t == "List":
+        active = node.prop("active")
+        active = int(active) if active is not None else None
+        is_nav = v in ("nav", "tabbar")
+        if is_nav:
+            em.emit(depth, f"<nav className={_classes('ui-listnav', f'ui-listnav--{v}')} aria-label={A(v)}>")
+            depth += 1
         em.emit(depth, f"<ul className={_classes('ui-list', f'ui-list--{v}')}>")
-        for item in node.prop("items"):
-            em.emit(depth + 1, f"<li>{{{js(item)}}}</li>")
+        for i, item in enumerate(node.prop("items")):
+            if i == active:
+                current = ' aria-current="page"' if is_nav else ""
+                em.emit(depth + 1, f'<li className="ui-list__item--active"{current}>{{{js(item)}}}</li>')
+            else:
+                em.emit(depth + 1, f"<li>{{{js(item)}}}</li>")
         em.emit(depth, "</ul>")
+        if is_nav:
+            depth -= 1
+            em.emit(depth, "</nav>")
     elif t == "Tabs":
         em.uses_tabs = True
-        em.emit(depth, f"<TabBar items={{{js(node.prop('items'))}}} />")
+        active = int(node.prop("active") or 0)
+        em.emit(depth, f"<TabBar items={{{js(node.prop('items'))}}} initial={{{active}}} variant={A(v)} />")
     elif t == "Badge":
         em.emit(depth, f"<span className={_classes('ui-badge', f'ui-badge--{v}')}>{{{js(text)}}}</span>")
     elif t == "Divider":
@@ -194,10 +214,10 @@ def _node(em, node, depth, in_form=False):
         raise ValueError(f"compiler has no mapping for component '{t}'")
 
 
-TABS_HELPER = """function TabBar({ items }) {
-  const [active, setActive] = useState(0);
+TABS_HELPER = """function TabBar({ items, initial, variant }) {
+  const [active, setActive] = useState(initial);
   return (
-    <div className="ui-tabs" role="tablist">
+    <div className={"ui-tabs ui-tabs--" + variant} role="tablist">
       {items.map((item, i) => (
         <button key={i} type="button" role="tab" aria-selected={i === active}
           className={i === active ? "ui-tab ui-tab--active" : "ui-tab"} onClick={() => setActive(i)}>
@@ -247,7 +267,11 @@ def compile_css():
     lines.append(f"""
 * {{ box-sizing: border-box; }}
 .ui-app {{ font-family: {t["typography"]["fontFamily"]}; font-size: {t["typography"]["baseSize"]};
-  color: var(--color-text); background: var(--color-background); min-height: 100vh; padding: var(--space-md); }}
+  color: var(--color-text); background: var(--color-background); min-height: 100vh;
+  --app-pad: var(--space-md); padding: var(--app-pad); }}
+.ui-app {{ display: flex; flex-direction: column; }}
+.ui-app > * {{ flex: 1 0 auto; }}
+.ui-stack--column > .ui-listnav--tabbar {{ margin-top: auto; }}
 .ui-stack {{ display: flex; gap: var(--space-md); }}
 .ui-stack--row {{ flex-direction: row; }}
 .ui-stack--row > .ui-stack, .ui-stack--row > .ui-grid, .ui-stack--row > .ui-form,
@@ -255,6 +279,11 @@ def compile_css():
 .ui-stack--column {{ flex-direction: column; }}
 .ui-align--start {{ align-items: flex-start; }} .ui-align--center {{ align-items: center; }}
 .ui-align--end {{ align-items: flex-end; }} .ui-align--stretch {{ align-items: stretch; }}
+.ui-justify--start {{ justify-content: flex-start; }} .ui-justify--center {{ justify-content: center; }}
+.ui-justify--end {{ justify-content: flex-end; }} .ui-justify--between {{ justify-content: space-between; }}
+.ui-stack--wrap {{ flex-wrap: wrap; }}
+.ui-sr-only {{ position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }}
 .ui-grid {{ display: grid; gap: var(--space-md); }}
 .ui-navbar {{ display: flex; align-items: center; gap: var(--space-md); min-height: {comp["navbar"]["height"]};
   padding: 0 var(--space-md); background: var(--color-surface); border-bottom: 1px solid var(--color-border); }}
@@ -265,6 +294,7 @@ def compile_css():
 .ui-card {{ background: var(--color-surface); border-radius: {comp["card"]["radius"]}; padding: {comp["card"]["padding"]};
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08); flex: 1 1 0; min-width: 0; }}
 .ui-card--outlined {{ box-shadow: none; border: 1px solid var(--color-border); }}
+.ui-card > :not(:first-child) {{ margin-top: var(--space-sm); }}  /* vertical rhythm; outranks .ui-text's margin:0 */
 .ui-card__title, .ui-form__title {{ font-weight: 600; margin-bottom: var(--space-sm); }}
 .ui-form {{ display: flex; flex-direction: column; gap: var(--space-md); }}
 .ui-heading {{ margin: 0; }}
@@ -295,6 +325,17 @@ def compile_css():
 .ui-tabs {{ display: flex; gap: var(--space-xs); border-bottom: 1px solid var(--color-border); }}
 .ui-tab {{ border: 0; background: none; padding: var(--space-sm) var(--space-md); cursor: pointer; font: inherit; }}
 .ui-tab--active {{ border-bottom: 2px solid var(--color-primary); color: var(--color-primary); }}
+.ui-tabs--pills {{ border-bottom: 0; gap: var(--space-sm); }}
+.ui-tabs--pills .ui-tab {{ border: 1px solid var(--color-border); border-radius: 999px; padding: var(--space-xs) var(--space-md);
+  background: var(--color-surface); }}
+.ui-tabs--pills .ui-tab--active {{ background: var(--color-primary); border-color: var(--color-primary); color: #fff; }}
+.ui-list--horizontal {{ list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-md); }}
+.ui-list__item--active {{ color: var(--color-primary); font-weight: 600; }}
+.ui-listnav--tabbar {{ position: sticky; bottom: 0; background: var(--color-surface);
+  border-top: 1px solid var(--color-border); margin: 0 calc(-1 * var(--app-pad)) calc(-1 * var(--app-pad)); }}
+.ui-list--tabbar {{ list-style: none; margin: 0; padding: var(--space-sm) 0; display: flex; justify-content: space-around; }}
+.ui-list--tabbar li {{ padding: var(--space-sm); color: var(--color-muted); font-size: 0.9em; }}
+.ui-list--tabbar .ui-list__item--active {{ color: var(--color-primary); }}
 .ui-badge {{ display: inline-block; padding: 2px var(--space-sm); border-radius: 999px; font-size: 0.85em; background: var(--color-border); }}
 .ui-badge--success {{ background: var(--color-success); color: #fff; }}
 .ui-badge--warning {{ background: var(--color-warning); color: #fff; }}
@@ -315,7 +356,7 @@ def compile_css():
 @media (max-width: 600px) {{
   .ui-stack--row {{ flex-wrap: wrap; }}
   .ui-grid {{ grid-template-columns: minmax(0, 1fr); }}
-  .ui-app {{ padding: var(--space-sm); }}
+  .ui-app {{ --app-pad: var(--space-sm); }}
 }}""")
     return "\n".join(lines) + "\n"
 

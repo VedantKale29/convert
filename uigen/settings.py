@@ -12,6 +12,12 @@ DEFAULT_SOFT_RULES = (
     "Prefer the most specific component (Metric for a number with a label, Table for tabular data).",
     "Use Stack for rows/columns and Grid for evenly repeated items such as card rows.",
     "Use only as much nesting as the layout needs.",
+    "Elements on the same line at opposite ends (a title with a badge or button on the right) are a row "
+    "Stack with justify 'between' and align 'center'.",
+    "A navigation bar pinned to the bottom of a phone screen is a List with variant 'tabbar'; set 'active' to "
+    "the 0-based index of the highlighted item.",
+    "Pill-shaped filter buttons where one is selected are Tabs with variant 'pills' and 'active' set.",
+    "A search box or field without a visible label still needs a 'label'; set 'labelHidden' to true.",
 )
 
 
