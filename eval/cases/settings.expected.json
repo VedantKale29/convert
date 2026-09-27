@@ -1,0 +1,159 @@
+{
+  "title": "Account settings",
+  "unsupported": [],
+  "root": {
+    "type": "Stack",
+    "variant": null,
+    "text": null,
+    "props": [
+      {
+        "name": "direction",
+        "value": "column"
+      },
+      {
+        "name": "gap",
+        "value": "md"
+      }
+    ],
+    "children": [
+      {
+        "type": "Heading",
+        "variant": null,
+        "text": "Account settings",
+        "props": [
+          {
+            "name": "level",
+            "value": 1
+          }
+        ],
+        "children": []
+      },
+      {
+        "type": "Tabs",
+        "variant": null,
+        "text": null,
+        "props": [
+          {
+            "name": "items",
+            "value": [
+              "Profile",
+              "Notifications",
+              "Security"
+            ]
+          }
+        ],
+        "children": []
+      },
+      {
+        "type": "Card",
+        "variant": null,
+        "text": null,
+        "props": [],
+        "children": [
+          {
+            "type": "Form",
+            "variant": null,
+            "text": null,
+            "props": [],
+            "children": [
+              {
+                "type": "Grid",
+                "variant": null,
+                "text": null,
+                "props": [
+                  {
+                    "name": "columns",
+                    "value": 2
+                  }
+                ],
+                "children": [
+                  {
+                    "type": "Input",
+                    "variant": null,
+                    "text": null,
+                    "props": [
+                      {
+                        "name": "label",
+                        "value": "Full name"
+                      },
+                      {
+                        "name": "inputType",
+                        "value": "text"
+                      }
+                    ],
+                    "children": []
+                  },
+                  {
+                    "type": "Select",
+                    "variant": null,
+                    "text": null,
+                    "props": [
+                      {
+                        "name": "label",
+                        "value": "Role"
+                      },
+                      {
+                        "name": "options",
+                        "value": [
+                          "Planner"
+                        ]
+                      }
+                    ],
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "type": "Textarea",
+                "variant": null,
+                "text": null,
+                "props": [
+                  {
+                    "name": "label",
+                    "value": "Bio"
+                  },
+                  {
+                    "name": "placeholder",
+                    "value": "Tell us about yourself"
+                  }
+                ],
+                "children": []
+              },
+              {
+                "type": "Stack",
+                "variant": null,
+                "text": null,
+                "props": [
+                  {
+                    "name": "direction",
+                    "value": "row"
+                  },
+                  {
+                    "name": "gap",
+                    "value": "md"
+                  }
+                ],
+                "children": [
+                  {
+                    "type": "Button",
+                    "variant": "secondary",
+                    "text": "Cancel",
+                    "props": [],
+                    "children": []
+                  },
+                  {
+                    "type": "Button",
+                    "variant": "primary",
+                    "text": "Save changes",
+                    "props": [],
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

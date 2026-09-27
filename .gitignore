@@ -1,0 +1,45 @@
+# --- secrets: never commit ---
+.env
+.env.*
+!.env.example
+
+# --- Python / uv ---
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+*.egg-info/
+dist/
+build/
+
+# --- Node build sandbox (lockfile IS committed) ---
+build_workspace/node_modules/
+build_workspace/jobs/
+
+# --- generated at runtime (may contain uploaded screenshots: keep out of git) ---
+runs/
+cache/
+traces/
+eval/report.json
+.gradio/
+flagged/
+
+# --- editors / OS ---
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# notebook experiment outputs (may contain screenshots)
+experiments/
+.ipynb_checkpoints/
+
+# integrations
+integrations/node-bff/node_modules/
+integrations/react/demo/bundle.js

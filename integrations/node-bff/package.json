@@ -1,0 +1,13 @@
+{
+  "name": "uigen-node-bff",
+  "private": true,
+  "description": "Node BFF: the only thing the React app talks to. Adds user auth, per-user ownership and rate limits, keeps the service key server-side.",
+  "type": "module",
+  "main": "server.js",
+  "engines": { "node": ">=18" },
+  "scripts": { "start": "node server.js" },
+  "dependencies": {
+    "express": "5.2.1",
+    "multer": "2.4.0"
+  }
+}

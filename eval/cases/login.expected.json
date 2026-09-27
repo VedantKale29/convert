@@ -1,0 +1,126 @@
+{
+  "title": "Sign in",
+  "unsupported": [],
+  "root": {
+    "type": "Stack",
+    "variant": null,
+    "text": null,
+    "props": [
+      {
+        "name": "direction",
+        "value": "column"
+      },
+      {
+        "name": "align",
+        "value": "center"
+      }
+    ],
+    "children": [
+      {
+        "type": "Card",
+        "variant": null,
+        "text": null,
+        "props": [],
+        "children": [
+          {
+            "type": "Form",
+            "variant": null,
+            "text": null,
+            "props": [],
+            "children": [
+              {
+                "type": "Heading",
+                "variant": null,
+                "text": "Sign in",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": 1
+                  }
+                ],
+                "children": []
+              },
+              {
+                "type": "Text",
+                "variant": "muted",
+                "text": "Welcome back. Please enter your details.",
+                "props": [],
+                "children": []
+              },
+              {
+                "type": "Input",
+                "variant": null,
+                "text": null,
+                "props": [
+                  {
+                    "name": "label",
+                    "value": "Email"
+                  },
+                  {
+                    "name": "inputType",
+                    "value": "email"
+                  },
+                  {
+                    "name": "placeholder",
+                    "value": "you@example.com"
+                  },
+                  {
+                    "name": "required",
+                    "value": true
+                  }
+                ],
+                "children": []
+              },
+              {
+                "type": "Input",
+                "variant": null,
+                "text": null,
+                "props": [
+                  {
+                    "name": "label",
+                    "value": "Password"
+                  },
+                  {
+                    "name": "inputType",
+                    "value": "password"
+                  },
+                  {
+                    "name": "required",
+                    "value": true
+                  }
+                ],
+                "children": []
+              },
+              {
+                "type": "Checkbox",
+                "variant": null,
+                "text": null,
+                "props": [
+                  {
+                    "name": "label",
+                    "value": "Remember me"
+                  }
+                ],
+                "children": []
+              },
+              {
+                "type": "Button",
+                "variant": "primary",
+                "text": "Sign in",
+                "props": [],
+                "children": []
+              },
+              {
+                "type": "Link",
+                "variant": null,
+                "text": "Forgot password?",
+                "props": [],
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

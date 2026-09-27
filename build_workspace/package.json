@@ -1,0 +1,16 @@
+{
+  "name": "uigen-build-sandbox",
+  "private": true,
+  "description": "Pinned toolchain used to build generated code. No other packages are allowed.",
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "axe-core": "4.13.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

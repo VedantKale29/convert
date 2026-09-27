@@ -1,0 +1,228 @@
+{
+  "title": "Overview",
+  "unsupported": [],
+  "root": {
+    "type": "Stack",
+    "variant": null,
+    "text": null,
+    "props": [
+      {
+        "name": "direction",
+        "value": "column"
+      },
+      {
+        "name": "gap",
+        "value": "xs"
+      }
+    ],
+    "children": [
+      {
+        "type": "Navbar",
+        "variant": "dark",
+        "text": "SupplyView",
+        "props": [],
+        "children": []
+      },
+      {
+        "type": "Stack",
+        "variant": null,
+        "text": null,
+        "props": [
+          {
+            "name": "direction",
+            "value": "row"
+          }
+        ],
+        "children": [
+          {
+            "type": "Sidebar",
+            "variant": null,
+            "text": null,
+            "props": [],
+            "children": [
+              {
+                "type": "List",
+                "variant": "nav",
+                "text": null,
+                "props": [
+                  {
+                    "name": "items",
+                    "value": [
+                      "Overview",
+                      "Orders",
+                      "Suppliers",
+                      "Reports"
+                    ]
+                  }
+                ],
+                "children": []
+              }
+            ]
+          },
+          {
+            "type": "Stack",
+            "variant": null,
+            "text": null,
+            "props": [
+              {
+                "name": "direction",
+                "value": "column"
+              },
+              {
+                "name": "gap",
+                "value": "lg"
+              }
+            ],
+            "children": [
+              {
+                "type": "Heading",
+                "variant": null,
+                "text": "Overview",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": 1
+                  }
+                ],
+                "children": []
+              },
+              {
+                "type": "Grid",
+                "variant": null,
+                "text": null,
+                "props": [
+                  {
+                    "name": "columns",
+                    "value": 3
+                  }
+                ],
+                "children": [
+                  {
+                    "type": "Card",
+                    "variant": null,
+                    "text": null,
+                    "props": [],
+                    "children": [
+                      {
+                        "type": "Metric",
+                        "variant": null,
+                        "text": null,
+                        "props": [
+                          {
+                            "name": "label",
+                            "value": "Open orders"
+                          },
+                          {
+                            "name": "value",
+                            "value": "128"
+                          }
+                        ],
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Card",
+                    "variant": null,
+                    "text": null,
+                    "props": [],
+                    "children": [
+                      {
+                        "type": "Metric",
+                        "variant": null,
+                        "text": null,
+                        "props": [
+                          {
+                            "name": "label",
+                            "value": "Late shipments"
+                          },
+                          {
+                            "name": "value",
+                            "value": "7"
+                          }
+                        ],
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Card",
+                    "variant": null,
+                    "text": null,
+                    "props": [],
+                    "children": [
+                      {
+                        "type": "Metric",
+                        "variant": null,
+                        "text": null,
+                        "props": [
+                          {
+                            "name": "label",
+                            "value": "On-time rate"
+                          },
+                          {
+                            "name": "value",
+                            "value": "94%"
+                          }
+                        ],
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Card",
+                "variant": null,
+                "text": "Recent orders",
+                "props": [],
+                "children": [
+                  {
+                    "type": "Table",
+                    "variant": null,
+                    "text": null,
+                    "props": [
+                      {
+                        "name": "columns",
+                        "value": [
+                          "Order",
+                          "Supplier",
+                          "Status",
+                          "Due"
+                        ]
+                      },
+                      {
+                        "name": "rows",
+                        "value": [
+                          [
+                            "PO-1042",
+                            "Acme Metals",
+                            "In transit",
+                            "Oct 02"
+                          ],
+                          [
+                            "PO-1043",
+                            "Nimbus Parts",
+                            "Delayed",
+                            "Oct 05"
+                          ],
+                          [
+                            "PO-1044",
+                            "Orbit Supply",
+                            "Delivered",
+                            "Sep 28"
+                          ]
+                        ]
+                      }
+                    ],
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

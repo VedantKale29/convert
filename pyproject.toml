@@ -1,0 +1,56 @@
+[project]
+name = "uigen"
+version = "0.1.0"
+description = "Wireframe/screenshot -> validated UI IR -> deterministic React code, with sandbox build and preview"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "openai>=1.40",
+    "gradio>=5.0",
+    "python-dotenv>=1.0",
+    "pydantic>=2.6",
+    "pillow>=10.0",
+    "rapidocr-onnxruntime>=1.4.4",
+    "playwright==1.56.0",
+    "fastapi>=0.141.1",
+    "uvicorn>=0.54.0",
+    "python-multipart>=0.0.32",
+]
+
+[dependency-groups]
+dev = [
+    "bandit>=1.9.4",
+    "mypy>=2.3.1",
+    "pytest>=8",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.6",
+]
+notebook = [
+    "ipykernel>=7.3.0",
+    "jupyterlab>=4.6.4",
+    "matplotlib>=3.10.9",
+    "pandas>=2.3.3",
+]
+
+[tool.uv]
+package = false            # an application, not a library: uv only manages the environment
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+extend-exclude = ["build_workspace"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E501"]          # long f-string templates in the compiler are intentional
+
+[tool.ruff.lint.per-file-ignores]
+"notebooks/*.ipynb" = ["E402"]   # notebooks add the project to sys.path before importing it
+
+[tool.ruff.lint.flake8-bugbear]
+# FastAPI's dependency markers are designed to be used as default arguments
+extend-immutable-calls = ["fastapi.Depends", "fastapi.File", "fastapi.Form", "fastapi.Header", "fastapi.Query"]

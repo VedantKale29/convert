@@ -1,0 +1,15 @@
+# Normalise line endings so Windows and Linux produce identical files
+* text=auto eol=lf
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+
+# Generated files: collapse in diffs
+uv.lock linguist-generated=true -diff
+build_workspace/package-lock.json linguist-generated=true -diff
+tests/snapshots/*.jsx linguist-generated=true
